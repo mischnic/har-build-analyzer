@@ -1,0 +1,19 @@
+module.exports.PROJECT = "/home/dev/target-project";
+module.exports.PARCEL_REPO = "/home/dev/parcel";
+
+module.exports.PARCEL_HAR =
+	"/home/Downloads/parcel.har";
+module.exports.WEBPACK_HAR =
+	"/home/Downloads/webpack.har";
+
+module.exports.PARCEL_ROOT =
+	module.exports.PROJECT + "/build-parcel";
+module.exports.PARCEL_ROOT =
+	module.exports.PROJECT + "/build-webpack";
+
+module.exports.PARCEL_CACHE =
+	module.exports.PROJECT + "/.parcel-cache";
+module.exports.WEBPACK_INFO =
+	module.exports.PROJECT + "/build.json";
+
+module.exports.parcelQuery = require("/home/dev/parcel/packages/dev/query/lib/index.js");
