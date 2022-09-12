@@ -5,15 +5,15 @@ const assert = require("assert");
 const {
 	PROJECT,
 	PARCEL_ROOT,
-	PARCEL_FILE,
+	PARCEL_HAR,
 	PARCEL_CACHE,
 	WEBPACK_ROOT,
-	WEBPACK_FILE,
+	WEBPACK_HAR,
 	WEBPACK_INFO,
 	parcelQuery,
 } = require("./config.js");
 
-const { getBundleInfo, loadGraphs } = parcelQuery;
+const { loadGraphs } = parcelQuery;
 
 function* iterateBundles(entries) {
 	for (let d of entries) {
@@ -29,8 +29,8 @@ function* iterateBundles(entries) {
 }
 
 function parcelGetAssets(entries) {
-	let { bundleGraph, requestTracker } = loadGraphs(PARCEL_CACHE);
-	let info = [...getBundleInfo(requestTracker)];
+	let { bundleGraph, requestTracker, bundleInfo } = loadGraphs(PARCEL_CACHE);
+	let info = [...bundleInfo];
 
 	let result = new Map();
 	for (let filename of iterateBundles(entries)) {
@@ -119,21 +119,21 @@ function mapToObject(result) {
 // ----------------------------
 
 let parcel = parcelGetAssets(
-	JSON.parse(fs.readFileSync(PARCEL_FILE, "utf8")).log.entries
+	JSON.parse(fs.readFileSync(PARCEL_HAR, "utf8")).log.entries
 );
 
 fs.writeFileSync(
-	PARCEL_FILE + ".resolved",
+	PARCEL_HAR + ".resolved",
 	JSON.stringify(mapToObject(parcel), null, 2)
 );
 
 // ----------------------------
 
 let webpack = webpackGetAssets(
-	JSON.parse(fs.readFileSync(WEBPACK_FILE, "utf8")).log.entries
+	JSON.parse(fs.readFileSync(WEBPACK_HAR, "utf8")).log.entries
 );
 
 fs.writeFileSync(
-	WEBPACK_FILE + ".resolved",
+	WEBPACK_HAR + ".resolved",
 	JSON.stringify(mapToObject(webpack), null, 2)
 );
